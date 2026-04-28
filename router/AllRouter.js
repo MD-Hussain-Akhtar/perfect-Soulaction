@@ -1,29 +1,28 @@
 const express = require('express');
 const router = express.Router();
 
-const AllControler = require('../controler/AllControler');
+const controller = require('../controler/AllControler'); // ✔ FIX SPELLING
 
-// ✅ Correct usage (dot lagana zaroori hai)
-router.get('/', AllControler.HomeControler);
-router.get('/about', AllControler.AboutControler);
-router.get('/contact', AllControler.ContectControler);
+// ================= ROUTES =================
+router.get('/', controller.home);
+router.get('/author', controller.author);
 
-router.get('/author', AllControler.AuthorControler);
-router.post('/author', AllControler.addProduct);
+router.get('/contact',controller.contact)
+router.get('/about',controller.about)
+router.post('/add-product', controller.addProduct);
 
-router.get('/products', AllControler.products);
+router.get('/delete/:id', controller.deleteProduct);
 
-router.get('/delete/:id', AllControler.deleteProduct);
+router.get('/edit/:id', controller.editForm);
+router.post('/update/:id', controller.updateProduct);
 
-router.get('/login-author', AllControler.LoginControler);
-router.post('/login', AllControler.LoginPostControler);
+router.get('/products', controller.products);
+router.get('/products/:id', controller.productDetails);
 
-router.get('/edit/:id', AllControler.editProductForm);
+router.get('/login', controller.login);
+router.post('/login', controller.loginPost);
 
-// ❗ YE MISSING THA (error ka reason ho sakta hai)
-router.post('/update/:id', AllControler.updateProduct);
-
-// ✅ 404 last
-router.use(AllControler.NotFoundControler);
+// ================= 404 (SAFE WAY) =================
+router.use(controller.notFound);
 
 module.exports = router;
